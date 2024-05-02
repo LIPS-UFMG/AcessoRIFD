@@ -20,11 +20,12 @@ const int solenoide = 8;                // Declara pino da fechadura elétrica
 int serNum[5];                          // Variável de leitura da tag
 
 int cards[][5] = {                      // Declara os códigos liberados para acesso
-  {147, 212, 41, 25, 119},            // Tag de Acesso 1
-  {240, 193, 247, 54, 240},             // Tag de Acesso 2
-  {131, 95, 107, 154, 45},
-  {236, 20, 101, 205, 80},
-  {59, 196, 213, 0, 42}              // Tag de Acesso Bruno
+  {147, 212, 41, 25, 119},            //Daniel
+  {59, 196, 213, 0, 42},              //Davi
+  {218, 108, 92, 161, 75},            //Lucas
+  {231, 159, 219, 43, 136},          //Vinicius
+  {2, 219, 100, 34, 159},           //Eduardo
+  {236, 20, 101, 205, 80}           //Bruno
 };
 
 bool access = false;
@@ -40,7 +41,7 @@ void setup() {
   rfid.init();
 
   pinMode(solenoide, OUTPUT);
-  digitalWrite(solenoide, LOW);
+  digitalWrite(solenoide, HIGH);
 
  
   lcd.setCursor (0, 0);
@@ -95,7 +96,7 @@ void loop() {
         lcd.print(rfid.serNum[0]); lcd.print(rfid.serNum[1]);
         lcd.print(rfid.serNum[2]); lcd.print(rfid.serNum[3]);
         lcd.print(rfid.serNum[4]);
-        digitalWrite(solenoide, HIGH);
+        digitalWrite(solenoide, LOW);
         lcd.setCursor (0, 0);
         lcd.print(F("  Bem-Vindo(a) "));
         lcd.setCursor (0, 1);
@@ -109,7 +110,7 @@ void loop() {
           lcd.print(i);
           delay (1000);
         }
-        digitalWrite(solenoide, LOW);
+        digitalWrite(solenoide, HIGH);
         lcd.clear();
       } else {
         alarm = alarm + 1;
