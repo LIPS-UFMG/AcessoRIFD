@@ -25,7 +25,9 @@ int cards[][5] = {                      // Declara os códigos liberados para ac
   {218, 108, 92, 161, 75},            //Lucas
   {231, 159, 219, 43, 136},          //Vinicius
   {2, 219, 100, 34, 159},           //Eduardo
-  {236, 20, 101, 205, 80}           //Bruno
+  {236, 20, 101, 205, 80},           //Bruno
+  {166, 37, 108, 33, 206},           //Giulia
+  {92, 187, 124, 204, 87}           //Samuel
 };
 
 bool access = false;
