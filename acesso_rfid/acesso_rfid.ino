@@ -19,9 +19,9 @@ LiquidCrystal lcd(6, 7, 5, 4, 3, 2);  // Declara os pinos do display
 const int solenoide = 8;  // Declara pino da fechadura elétrica
 int serNum[5];            // Variável de leitura da tag
 bool access = false;      // Define valor padrão de acesso negado
-int tries;                // Quantidade de tentativas falhas seguidas
-int maxTries;             // Quantidade máxima de tentativas para bloqueio
-int bloq;                 // Tempo de bloqueio
+int tries = 0;                // Quantidade de tentativas falhas seguidas
+int maxTries = 5;             // Quantidade máxima de tentativas para bloqueio
+int bloq = 5;                 // Tempo de bloqueio
 
 int cards[][5] = {
   // Declara os códigos liberados para acesso
@@ -34,7 +34,9 @@ int cards[][5] = {
   { 166, 37, 108, 33, 206 },   //6 Giulia
   { 92, 187, 124, 204, 87 },   //7 Samuel
   { 158, 229, 235, 159, 15 },  //8 Lucas
-  { 211, 9, 30, 25, 221 }      //9 Gabriela
+  { 211, 9, 30, 25, 221 },      //9 Gabriela
+  { 137, 77, 78, 89, 211 }       //10 Leonardo
+  
 };
 
 void setup() {
@@ -57,10 +59,7 @@ void setup() {
 
 void loop() {
 
-  access = false;  //define valor padrão de acesso negado
-  tries = 0;       //quantidade de tentativas falhas seguidas
-  maxTries = 3;    //quantidade máxima de tentativas para bloqueio
-  bloq = 5;        //tempo de bloqueio
+  Serial.println("voltou no loop");
 
 
   //Modo de operação normal
@@ -69,6 +68,7 @@ void loop() {
   lcd.print(F(" Acesso ao LIPS"));
   lcd.setCursor(0, 1);
   lcd.print(F("Aprox. o cartao"));
+  delay(1000);
 
   if (rfid.isCard()) {  //confere se valor lido é um cartão
 
@@ -154,10 +154,10 @@ void loop() {
             lcd.setCursor(0, 1);
             lcd.print("    Gabriela   ");
             break;
-            // } else if (rfid.serNum[i] == cards[10][i]) {
-            //   lcd.setCursor(0, 1);
-            //   lcd.print("    Leonardo   ");
-            //   break;
+          } else if (rfid.serNum[i] == cards[10][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("    Leonardo   ");
+            break;
           } else {
             lcd.setCursor(0, 1);
             lcd.print("Usuário desconhecido");
@@ -169,13 +169,26 @@ void loop() {
         lcd.clear();
         tries = 0;  //zera quantidade de tentativas falhas
       } else {      //caso acesso negado
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(F("  RFID Negado  "));
+        Serial.println("teste");
+        tries = tries + 1;   //incrementa quantidade de tentativas falhas
+        lcd.print(tries);
         for (int i = 3; i > 0; i--) {  //printa serial rejeitado e contagem regressiva no canto inferior direito
-          lcd.setCursor(14, 1);
-          lcd.print((i));
+          lcd.clear();
+          lcd.setCursor (0, 0);
+          lcd.print(rfid.serNum[0]);lcd.print(F(" "));lcd.print(rfid.serNum[1]);lcd.print(F(" "));lcd.print(rfid.serNum[2]);
+          lcd.setCursor (0, 1);
+          lcd.print(F(" "));lcd.print(rfid.serNum[3]);lcd.print(F(" "));lcd.print(rfid.serNum[4]);
+          lcd.setCursor (12, 1); 
+          lcd.print(i);
+          lcd.setCursor (14, 1); 
+          lcd.print(tries);
+          Serial.println(tries);
           delay(1000);
-          tries += 1;  //incrementa quantidade de tentativas falhas
+          lcd.setCursor(0, 1);
+ 
         }
         lcd.clear();
         rfid.halt();
