@@ -112,7 +112,7 @@ void loop() {
     if (access) {  //se cartão for válido
 
       digitalWrite(solenoide, LOW);
-      delay(100);
+      delay(70);
       digitalWrite(solenoide, HIGH);
 
       lcd.setCursor(0, 0);
@@ -166,6 +166,10 @@ void loop() {
           lcd.setCursor(0, 1);
           lcd.print("    Gabriela   ");
           break;
+          // } else if (rfid.serNum[i] == cards[10][i]) {
+          //   lcd.setCursor(0, 1);
+          //   lcd.print("    Leonardo   ");
+          //   break;
         } else {
           lcd.setCursor(0, 1);
           lcd.print("Usuário desconhecido");
@@ -177,33 +181,26 @@ void loop() {
       lcd.clear();
       tries = 0;  //zera quantidade de tentativas falhas
     } else {      //caso acesso negado
-      Serial.println("Acesso Negado!");
-      lcd.print(rfid.serNum[0]);
-      lcd.print(rfid.serNum[1]);  //printa numero do cartão
-      lcd.print(rfid.serNum[2]);
-      lcd.print(rfid.serNum[3]);
-      lcd.print(rfid.serNum[4]);
-      delay(3000);
+      lcd.setCursor(0, 0);
+      lcd.print(F("  RFID Negado "));
+      for (int i = 3; i > 0; i--) {  //printa serial rejeitado e contagem regressiva no canto inferior direito
+        lcd.setCursor(14, 1);
+        lcd.print((i));
+        delay(1000);
+        tries += 1;  //incrementa quantidade de tentativas falhas
+      }
+      lcd.clear();
+      rfid.halt();
+    }
+    else {  //caso não for um código RFID válido
+      lcd.setCursor(0, 0);
+      lcd.print(F("  Acesso Negado "));
+      for (int i = 3; i > 0; i--) {  //printa serial rejeitado e contagem regressiva no canto inferior direito
+        lcd.setCursor(14, 1);
+        lcd.print((i));
+        delay(1000);
+      }
       lcd.clear();
       tries += 1;  //incrementa quantidade de tentativas falhas
     }
-    rfid.halt();
-  } else {  //caso não for um código RFID válido
-    lcd.setCursor(0, 0);
-    lcd.print(F("  Acesso Negado "));
-    lcd.setCursor(0, 1);
-    lcd.print(F("RFID Inválido"));
-    for (int i = 3; i > 0; i--) {  //printa serial rejeitado e contagem regressiva no canto inferior direito
-      lcd.setCursor(0, 1);
-      lcd.print(rfid.serNum[0]);
-      lcd.print(rfid.serNum[1]);
-      lcd.print(rfid.serNum[2]);
-      lcd.print(rfid.serNum[3]);
-      lcd.print(rfid.serNum[4]);
-      lcd.setCursor(14, 1);
-      lcd.print((i));
-      delay(1000);
-    }
-    tries += 1;  //incrementa quantidade de tentativas falhas
   }
-}
