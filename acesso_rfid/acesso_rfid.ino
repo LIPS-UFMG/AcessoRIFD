@@ -25,14 +25,16 @@ int bloq = 10;            // Tempo de bloqueio
 
 int cards[][5] = {
   // Declara os códigos liberados para acesso
-  { 147, 212, 41, 25, 119 },   //0 Daniel
-  { 59, 196, 213, 0, 42 },     //1 Davi
-  { 218, 108, 92, 161, 75 },   //2 Lucas
-  { 231, 159, 219, 43, 136 },  //3 Vinicius
-  { 2, 219, 100, 34, 159 },    //4 Eduardo
+  { 2, 219, 100, 34, 159 },  //0 Eduardo
+  { 59, 196, 213, 0, 42 },   //1 Davi
+
+  { 147, 212, 41, 25, 119 },   //2 Daniel
+  { 218, 108, 92, 161, 75 },   //3 Lucas
+  { 231, 159, 219, 43, 136 },  //4 Vinicius
   { 236, 20, 101, 205, 80 },   //5 Bruno
   { 166, 37, 108, 33, 206 },   //6 Giulia
   { 92, 187, 124, 204, 87 },   //7 Samuel
+
   { 158, 229, 235, 159, 15 },  //8 Lucas
   { 211, 9, 30, 25, 221 },     //9 Gabriela
   { 137, 77, 78, 89, 211 }     //10 Leonardo
@@ -48,7 +50,6 @@ void setup() {
   pinMode(solenoide, OUTPUT);  //solenoide é a saída para fechadura
   digitalWrite(solenoide, HIGH);
 
-
   lcd.setCursor(0, 0);  //seta cursor para primeira linha, primeira coluna
   lcd.print(F(" Controle RFID"));
   lcd.setCursor(0, 1);           //seta cursor para segunda linha, primeira coluna
@@ -60,7 +61,7 @@ void setup() {
 void loop() {
 
   lcd.setCursor(0, 0);
-  lcd.print(F(" Acesso ao LIPS"));
+  lcd.print(F("Acesso ao LIPS!"));
   lcd.setCursor(0, 1);
   lcd.print(F("Aprox. o cartao"));
   delay(1500);
@@ -101,11 +102,15 @@ void loop() {
         for (int i = 0; i < sizeof(rfid.serNum); i++) {  //loop para imprimir nome
           if (rfid.serNum[i] == cards[0][i]) {
             lcd.setCursor(0, 1);
-            lcd.print("     Daniel     ");
+            lcd.print("    Eduardo     ");
             break;
           } else if (rfid.serNum[i] == cards[1][i]) {
             lcd.setCursor(0, 1);
             lcd.print("      Davi      ");
+            break;
+          } else if (rfid.serNum[i] == cards[0][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("     Daniel     ");
             break;
           } else if (rfid.serNum[i] == cards[2][i]) {
             lcd.setCursor(0, 1);
@@ -114,10 +119,6 @@ void loop() {
           } else if (rfid.serNum[i] == cards[3][i]) {
             lcd.setCursor(0, 1);
             lcd.print("    Vinicius     ");
-            break;
-          } else if (rfid.serNum[i] == cards[4][i]) {
-            lcd.setCursor(0, 1);
-            lcd.print("    Eduardo     ");
             break;
           } else if (rfid.serNum[i] == cards[5][i]) {
             lcd.setCursor(0, 1);
