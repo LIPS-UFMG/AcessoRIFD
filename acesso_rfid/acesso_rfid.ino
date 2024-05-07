@@ -27,7 +27,9 @@ int cards[][5] = {                      // Declara os códigos liberados para ac
   {2, 219, 100, 34, 159},           //Eduardo
   {236, 20, 101, 205, 80},           //Bruno
   {166, 37, 108, 33, 206},           //Giulia
-  {92, 187, 124, 204, 87}           //Samuel
+  {92, 187, 124, 204, 87},           //Samuel
+  {158, 229, 235, 159, 15},         //Lucas
+  {211, 9, 30, 25, 221}            //Gabriela
 };
 
 bool access = false;
@@ -92,27 +94,97 @@ void loop() {
           if (access) break;
         }
       }
-
+ 
       if (access) {
         Serial.println("Bem-Vindo(a)!"); 
-        lcd.print(rfid.serNum[0]); lcd.print(rfid.serNum[1]);
+        /*lcd.print(rfid.serNum[0]); lcd.print(rfid.serNum[1]);
         lcd.print(rfid.serNum[2]); lcd.print(rfid.serNum[3]);
-        lcd.print(rfid.serNum[4]);
+        lcd.print(rfid.serNum[4]);*/   
         digitalWrite(solenoide, LOW);
+        delay(100);
+        digitalWrite(solenoide, HIGH);
+        
         lcd.setCursor (0, 0);
         lcd.print(F("  Bem-Vindo(a) "));
         lcd.setCursor (0, 1);
         lcd.print(F("                "));
-        for (int i = 3; i > 0; i--) {
+        /*for (int i = 3; i > 0; i--) {
           lcd.setCursor (0, 1);
           lcd.print(rfid.serNum[0]); lcd.print(rfid.serNum[1]);
           lcd.print(rfid.serNum[2]); lcd.print(rfid.serNum[3]);
           lcd.print(rfid.serNum[4]);
           lcd.setCursor (14, 1); 
           lcd.print(i);
-          delay (1000);
-        }
-        digitalWrite(solenoide, HIGH);
+          
+        }*/            
+          for (int i = 0; i < sizeof(rfid.serNum); i++ ) {    
+            if (rfid.serNum[i] == cards[0][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("     Daniel     ");
+              delay (3000);
+              break;
+            } else if(rfid.serNum[i] == cards[1][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("      Davi      ");
+              delay (3000);
+              break;
+            }
+              else if(rfid.serNum[i] == cards[2][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("     Lucas      ");
+              delay (3000);
+              break;
+            }
+            else if(rfid.serNum[i] == cards[3][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("    Vinicius     ");
+              delay (3000);
+              break;
+            }
+            else if(rfid.serNum[i] == cards[4][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("    Eduardo     ");
+              delay (3000);
+              break;
+            }
+            else if(rfid.serNum[i] == cards[5][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("     Bruno      ");
+              delay (3000);
+              break;
+            }
+            else if(rfid.serNum[i] == cards[6][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("     Giulia     ");
+              delay (3000);
+              break;
+            }
+            else if(rfid.serNum[i] == cards[7][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("     Samuel     ");
+              delay (3000);
+              break;
+            }
+            else if(rfid.serNum[i] == cards[8][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("      Lucas    ");
+              delay (3000);
+              break;
+            }
+            else if(rfid.serNum[i] == cards[9][i]) {
+              lcd.setCursor (0, 1);
+              lcd.print("    Gabriela   ");
+              delay (3000);
+              break;
+            }
+            else{
+              lcd.setCursor (0, 1);
+              lcd.print("Usuário desconhecido");
+              delay (3000);
+              break;
+            }
+          }
+        
         lcd.clear();
       } else {
         alarm = alarm + 1;
