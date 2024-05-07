@@ -5,7 +5,7 @@
 // INSTAGRAM < @usinainfo >
 
 #include <SPI.h>                 // Inclui a biblioteca SPI.h
- #include <RFID.h>                // Inclui a biblioteca RFID.h
+#include <RFID.h>                // Inclui a biblioteca RFID.h
 #include <Wire.h>                // Inclui a biblioteca Wire.h
 #include <LiquidCrystal.h>       // Inclui a biblioteca LiquidCrystal.h
 
@@ -19,17 +19,17 @@ LiquidCrystal lcd(6, 7, 5, 4, 3, 2);    // Declara os pinos do display
 const int solenoide = 8;                // Declara pino da fechadura elétrica
 int serNum[5];                          // Variável de leitura da tag
 
-int cards[][5] = {                      // Declara os códigos liberados para acesso
+int cards[][5] = {                    // Declara os códigos liberados para acesso
   {147, 212, 41, 25, 119},            //Daniel
   {59, 196, 213, 0, 42},              //Davi
   {218, 108, 92, 161, 75},            //Lucas
-  {231, 159, 219, 43, 136},          //Vinicius
-  {2, 219, 100, 34, 159},           //Eduardo
-  {236, 20, 101, 205, 80},           //Bruno
-  {166, 37, 108, 33, 206},           //Giulia
-  {92, 187, 124, 204, 87},           //Samuel
-  {158, 229, 235, 159, 15},         //Lucas
-  {211, 9, 30, 25, 221}            //Gabriela
+  {231, 159, 219, 43, 136},           //Vinicius
+  {2, 219, 100, 34, 159},             //Eduardo
+  {236, 20, 101, 205, 80},            //Bruno
+  {166, 37, 108, 33, 206},            //Giulia
+  {92, 187, 124, 204, 87},            //Samuel
+  {158, 229, 235, 159, 15},           //Lucas
+  {211, 9, 30, 25, 221}               //Gabriela
 };
 
 bool access = false;
@@ -42,16 +42,16 @@ void setup() {
   Serial.begin(9600);
   lcd.begin(16, 2);
   SPI.begin();
-  rfid.init();
+  rfid.init();                      //configurações iniciais
 
-  pinMode(solenoide, OUTPUT);
+  pinMode(solenoide, OUTPUT);       //solenoide é a saída para fechadura
   digitalWrite(solenoide, HIGH);
 
  
-  lcd.setCursor (0, 0);
+  lcd.setCursor (0, 0);             //seta cursor para primeira linha, primeira coluna
   lcd.print(F(" Controle RFID"));
-  lcd.setCursor (0, 1);
-  lcd.print(F("   de Acesso"));
+  lcd.setCursor (0, 1);             //seta cursor para segunda linha, primeira coluna
+  lcd.print(F("   de Acesso"));     //imprime mensagem inicial
   delay (1000);
   lcd.clear();
   
@@ -68,7 +68,7 @@ void loop() {
     lcd.setCursor (0, 1);
     lcd.print(F("Aprox. o cartao"));
 
-    if (rfid.isCard()) {
+    if (rfid.isCard()) {                    //confere se valor lido é um cartão
 
       if (rfid.readCardSerial()) {
         Serial.print(rfid.serNum[0]);
@@ -80,10 +80,10 @@ void loop() {
         Serial.print(rfid.serNum[3]);
         Serial.print(" ");
         Serial.print(rfid.serNum[4]);
-        Serial.println("");
+        Serial.println("");                 // le serial number
 
         for (int x = 0; x < sizeof(cards); x++) {             //Loop para procurar no banco se cartão inserido é válido
-          for (int i = 0; i < sizeof(rfid.serNum); i++ ) {    
+          for (int i = 0; i < sizeof(rfid.serNum); i++ ) {    //Confere grupo de caracteres a cada vez
             if (rfid.serNum[i] != cards[x][i]) {
               access = false;
               break;
@@ -95,29 +95,23 @@ void loop() {
         }
       }
  
-      if (access) {
-        Serial.println("Bem-Vindo(a)!"); 
-        /*lcd.print(rfid.serNum[0]); lcd.print(rfid.serNum[1]);
-        lcd.print(rfid.serNum[2]); lcd.print(rfid.serNum[3]);
-        lcd.print(rfid.serNum[4]);*/   
+      if (access) {                            //se cartão for válido
+
         digitalWrite(solenoide, LOW);
         delay(100);
         digitalWrite(solenoide, HIGH);
         
         lcd.setCursor (0, 0);
         lcd.print(F("  Bem-Vindo(a) "));
-        lcd.setCursor (0, 1);
-        lcd.print(F("                "));
-        /*for (int i = 3; i > 0; i--) {
+        /*for (int i = 3; i > 0; i--) {         //loop para imprimir numero do cartão, util para cadastrar novo cartão
           lcd.setCursor (0, 1);
           lcd.print(rfid.serNum[0]); lcd.print(rfid.serNum[1]);
           lcd.print(rfid.serNum[2]); lcd.print(rfid.serNum[3]);
           lcd.print(rfid.serNum[4]);
           lcd.setCursor (14, 1); 
           lcd.print(i);
-          
         }*/            
-          for (int i = 0; i < sizeof(rfid.serNum); i++ ) {    
+          for (int i = 0; i < sizeof(rfid.serNum); i++ ) {    //loop para imprimir nome
             if (rfid.serNum[i] == cards[0][i]) {
               lcd.setCursor (0, 1);
               lcd.print("     Daniel     ");
@@ -149,8 +143,8 @@ void loop() {
             }
             else if(rfid.serNum[i] == cards[5][i]) {
               lcd.setCursor (0, 1);
-              lcd.print("     Bruno      ");
-              delay (3000);
+              lcd.print("     Bruno     ");
+              delay (3000); 
               break;
             }
             else if(rfid.serNum[i] == cards[6][i]) {
@@ -186,12 +180,13 @@ void loop() {
           }
         
         lcd.clear();
-      } else {
+      } else {              //caso acesso negado
         alarm = alarm + 1;
         Serial.println("Acesso Negado!");
-        lcd.print(rfid.serNum[0]); lcd.print(rfid.serNum[1]);
+        lcd.print(rfid.serNum[0]); lcd.print(rfid.serNum[1]);       //printa numero do cartão
         lcd.print(rfid.serNum[2]); lcd.print(rfid.serNum[3]);
         lcd.print(rfid.serNum[4]);
+        delay(3000)
         lcd.clear();
       }
     }
