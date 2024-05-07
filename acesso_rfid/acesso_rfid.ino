@@ -21,16 +21,16 @@ int serNum[5];            // Variável de leitura da tag
 
 int cards[][5] = {
   // Declara os códigos liberados para acesso
-  { 147, 212, 41, 25, 119 },   //Daniel
-  { 59, 196, 213, 0, 42 },     //Davi
-  { 218, 108, 92, 161, 75 },   //Lucas
-  { 231, 159, 219, 43, 136 },  //Vinicius
-  { 2, 219, 100, 34, 159 },    //Eduardo
-  { 236, 20, 101, 205, 80 },   //Bruno
-  { 166, 37, 108, 33, 206 },   //Giulia
-  { 92, 187, 124, 204, 87 },   //Samuel
-  { 158, 229, 235, 159, 15 },  //Lucas
-  { 211, 9, 30, 25, 221 }      //Gabriela
+  { 147, 212, 41, 25, 119 },   //0 Daniel
+  { 59, 196, 213, 0, 42 },     //1 Davi
+  { 218, 108, 92, 161, 75 },   //2 Lucas
+  { 231, 159, 219, 43, 136 },  //3 Vinicius
+  { 2, 219, 100, 34, 159 },    //4 Eduardo
+  { 236, 20, 101, 205, 80 },   //5 Bruno
+  { 166, 37, 108, 33, 206 },   //6 Giulia
+  { 92, 187, 124, 204, 87 },   //7 Samuel
+  { 158, 229, 235, 159, 15 },  //8 Lucas
+  { 211, 9, 30, 25, 221 }      //9 Gabriela
 };
 
 bool access = false;
@@ -49,13 +49,33 @@ void setup() {
   lcd.print(F(" Controle RFID"));
   lcd.setCursor(0, 1);           //seta cursor para segunda linha, primeira coluna
   lcd.print(F("   de Acesso"));  //imprime mensagem inicial
-  delay(1000);
+  delay(2000);
   lcd.clear();
 }
 
 void loop() {
 
-  access = false;
+  access = false;  //define valor padrão de acesso negado
+  tries = 0;       //quantidade de tentativas falhas seguidas
+  maxTries = 3;    //quantidade máxima de tentativas para bloqueio
+  bloq = 5;        //tempo de bloqueio
+
+  if (tries >= maxTries) {  //se qtd de tentativas alcançar/ultrapassar o maximo bloquei tentativas por
+    lcd.setCursor(0, 0);
+    lcd.print(F("Max. Tentativas"));
+    lcd.setCursor(0, 1);
+    lcd.print(F("Aguarde"));
+    lcd.setCursor(14, 1);
+
+
+    for (i = bloq; i >= 0; i--) {
+      lcd.print(F("i"));
+      delay(1000);
+    }
+    tries = 0;
+    lcd.clear();
+  }
+
   lcd.setCursor(0, 0);
   lcd.print(F(" Acesso ao LIPS"));
   lcd.setCursor(0, 1);
@@ -155,7 +175,8 @@ void loop() {
 
       delay(3000);
       lcd.clear();
-    } else {  //caso acesso negado
+      tries = 0;  //zera quantidade de tentativas falhas
+    } else {      //caso acesso negado
       Serial.println("Acesso Negado!");
       lcd.print(rfid.serNum[0]);
       lcd.print(rfid.serNum[1]);  //printa numero do cartão
@@ -164,6 +185,7 @@ void loop() {
       lcd.print(rfid.serNum[4]);
       delay(3000);
       lcd.clear();
+      tries += 1;  //incrementa quantidade de tentativas falhas
     }
     rfid.halt();
   } else {  //caso não for um código RFID válido
@@ -182,5 +204,6 @@ void loop() {
       lcd.print((i));
       delay(1000);
     }
+    tries += 1;  //incrementa quantidade de tentativas falhas
   }
 }
