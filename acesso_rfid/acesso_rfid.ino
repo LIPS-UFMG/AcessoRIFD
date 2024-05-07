@@ -64,11 +64,16 @@ void loop() {
   if (rfid.isCard()) {  //confere se valor lido é um cartão
 
     if (rfid.readCardSerial()) {  // salva valor lido se for compativel
-      Serial.print(rfid.serNum[0]);Serial.print(" ");
-      Serial.print(rfid.serNum[1]);Serial.print(" ");
-      Serial.print(rfid.serNum[2]);Serial.print(" ");
-      Serial.print(rfid.serNum[3]);Serial.print(" ");
-      Serial.print(rfid.serNum[4]);Serial.println("");  // le serial number
+      Serial.print(rfid.serNum[0]);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[1]);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[2]);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[3]);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[4]);
+      Serial.println("");  // le serial number
 
       for (int x = 0; x < sizeof(cards); x++) {          //Loop para procurar no banco se cartão inserido é válido
         for (int i = 0; i < sizeof(rfid.serNum); i++) {  //Confere grupo de caracteres a cada vez
@@ -81,7 +86,8 @@ void loop() {
         }
         if (access) break;
       }
-    } else{}
+    } else {
+    }
 
     if (access) {  //se cartão for válido
 
@@ -160,7 +166,7 @@ void loop() {
       lcd.clear();
     }
     rfid.halt();
-  } else {                          //caso não for um código RFID válido
+  } else {  //caso não for um código RFID válido
     lcd.setCursor(0, 0);
     lcd.print(F("  Acesso Negado "));
     lcd.setCursor(0, 1);
