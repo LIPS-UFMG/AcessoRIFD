@@ -38,8 +38,8 @@ int cards[][5] = {
 
   { 158, 229, 235, 159, 15 },  //9 Lucas
   { 211, 9, 30, 25, 221 },     //10 Gabriela
-  { 137, 77, 78, 89, 211 }     //11 Leonardo
-  { 131, 213, 11, 25, 68 }     //12 Jessica
+  { 137, 77, 78, 89, 211 },     //11 Leonardo
+  { 131, 213, 11, 25, 68 },     //12 Jessica
   { 121, 39, 138, 90, 142 }    //13 Joao
 
 };
@@ -176,16 +176,16 @@ void loop() {
         tries += 1;                    //incrementa quantidade de tentativas falhas
         for (int i = 3; i > 0; i--) {  //printa serial rejeitado e contagem regressiva no canto inferior direito
           lcd.setCursor(0, 0);
-          lcd.print(rfid.sernum[0]);
+          lcd.print(rfid.serNum[0]);
           lcd.print(F(" "));
-          lcd.print(rfid.sernum[1]);
+          lcd.print(rfid.serNum[1]);
           lcd.print(F(" "));
-          lcd.print(rfid.sernum[2]);
+          lcd.print(rfid.serNum[2]);
           lcd.print(F(" "));
           lcd.setCursor(0, 1);
-          lcd.print(rfid.sernum[3]);
+          lcd.print(rfid.serNum[3]);
           lcd.print(F(" "));
-          lcd.print(rfid.sernum[4]);
+          lcd.print(rfid.serNum[4]);
           lcd.print(F(" "));
           //lcd.setCursor(7,1);
           lcd.setCursor(14, 1);
