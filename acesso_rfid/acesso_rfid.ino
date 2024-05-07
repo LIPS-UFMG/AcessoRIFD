@@ -61,84 +61,7 @@ void setup() {
   lcd.clear();
 }
 
-void printName() {
-  for (int i = 0; i < sizeof(rfid.serNum); i++) {  //loop para imprimir nome
-    if (rfid.serNum[i] == cards[0][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("    Eduardo     ");
-      break;
-    } else if (rfid.serNum[i] == cards[1][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("      Davi      ");
-      break;
-    } else if (rfid.serNum[i] == cards[2][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("   Sebastião   ");
-      break;
-    } else if (rfid.serNum[i] == cards[3][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("     Daniel     ");
-      break;
-    } else if (rfid.serNum[i] == cards[4][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("     Lucas      ");
-      break;
-    } else if (rfid.serNum[i] == cards[5][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("    Vinicius     ");
-      break;
-    } else if (rfid.serNum[i] == cards[6][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("     Bruno     ");
-      break;
-    } else if (rfid.serNum[i] == cards[7][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("     Giulia     ");
-      break;
-    } else if (rfid.serNum[i] == cards[8][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("     Samuel     ");
-      break;
-    } else if (rfid.serNum[i] == cards[9][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("      Lucas    ");
-      break;
-    } else if (rfid.serNum[i] == cards[10][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("    Gabriela   ");
-      break;
-    } else if (rfid.serNum[i] == cards[11][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("    Leonardo   ");
-      break;
-    } else if (rfid.serNum[i] == cards[12][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("    Jessica   ");
-      break;
-    } else if (rfid.serNum[i] == cards[13][i]) {
-      lcd.setCursor(0, 1);
-      lcd.print("    João   ");
-      break;
-    } else {
-      lcd.setCursor(0, 1);
-      lcd.print("    Mistério   ");
-      break;
-    }
-  }
-}
 
-void readRFID() {
-  Serial.print(rfid.serNum[0]);
-  Serial.print(" ");
-  Serial.print(rfid.serNum[1]);
-  Serial.print(" ");
-  Serial.print(rfid.serNum[2]);
-  Serial.print(" ");
-  Serial.print(rfid.serNum[3]);
-  Serial.print(" ");
-  Serial.print(rfid.serNum[4]);
-  Serial.println("");
-}
 
 void loop() {
 
@@ -151,10 +74,19 @@ void loop() {
   if (rfid.isCard()) {  //loop principal, lê se for cartão
 
     if (rfid.readCardSerial()) {  // salva valor lido
-      readRFID();  // le serial number
+      Serial.print(rfid.serNum[0]);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[1]);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[2]);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[3]);
+      Serial.print(" ");
+      Serial.print(rfid.serNum[4]);
+      Serial.println("");                                // le serial number
       for (int i = 0; i < sizeof(cards); i++) {          //Loop para procurar no banco se cartão tem acesso
         for (int j = 0; j < sizeof(rfid.serNum); j++) {  //Confere grupo de caracteres a cada vez
-          if (rfid.serNum[i] != cards[i][j]) {
+          if (rfid.serNum[j] != cards[i][j]) {
             access = false;
             break;
           } else {
@@ -171,7 +103,69 @@ void loop() {
 
         lcd.setCursor(0, 0);
         lcd.print(F("  Bem-Vindo(a) "));
-        printName();
+        for (int i = 0; i < sizeof(rfid.serNum); i++) {  //loop para imprimir nome
+          if (rfid.serNum[i] == cards[0][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("    Eduardo     ");
+            break;
+          } else if (rfid.serNum[i] == cards[1][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("      Davi      ");
+            break;
+          } else if (rfid.serNum[i] == cards[2][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("   Sebastião   ");
+            break;
+          } else if (rfid.serNum[i] == cards[3][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("     Daniel     ");
+            break;
+          } else if (rfid.serNum[i] == cards[4][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("     Lucas      ");
+            break;
+          } else if (rfid.serNum[i] == cards[5][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("    Vinicius     ");
+            break;
+          } else if (rfid.serNum[i] == cards[6][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("     Bruno     ");
+            break;
+          } else if (rfid.serNum[i] == cards[7][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("     Giulia     ");
+            break;
+          } else if (rfid.serNum[i] == cards[8][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("     Samuel     ");
+            break;
+          } else if (rfid.serNum[i] == cards[9][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("      Lucas    ");
+            break;
+          } else if (rfid.serNum[i] == cards[10][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("    Gabriela   ");
+            break;
+          } else if (rfid.serNum[i] == cards[11][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("    Leonardo   ");
+            break;
+          } else if (rfid.serNum[i] == cards[12][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("    Jessica   ");
+            break;
+          } else if (rfid.serNum[i] == cards[13][i]) {
+            lcd.setCursor(0, 1);
+            lcd.print("    João   ");
+            break;
+          } else {
+            lcd.setCursor(0, 1);
+            lcd.print("    Mistério   ");
+            break;
+          }
+        }
         delay(3000);
         lcd.clear();
         tries = 0;  //zera quantidade de tentativas falhas
