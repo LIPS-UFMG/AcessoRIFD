@@ -101,6 +101,7 @@ void loop() {
         delay(70);
         digitalWrite(solenoide, HIGH);
 
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(F("  Bem-Vindo(a) "));
         for (int i = 0; i < sizeof(rfid.serNum); i++) {  //loop para imprimir nome
@@ -114,7 +115,7 @@ void loop() {
             break;
           } else if (rfid.serNum[i] == cards[2][i]) {
             lcd.setCursor(0, 1);
-            lcd.print("   Sebastião   ");
+            lcd.print("   Sebastiao   ");
             break;
           } else if (rfid.serNum[i] == cards[3][i]) {
             lcd.setCursor(0, 1);
@@ -158,11 +159,11 @@ void loop() {
             break;
           } else if (rfid.serNum[i] == cards[13][i]) {
             lcd.setCursor(0, 1);
-            lcd.print("    João   ");
+            lcd.print("    Joao   ");
             break;
           } else {
             lcd.setCursor(0, 1);
-            lcd.print("    Mistério   ");
+            lcd.print("    Misterio   ");
             break;
           }
         }
@@ -206,7 +207,7 @@ void loop() {
     lcd.setCursor(14, 1);
 
     for (int i = bloq; i >= 0; i--) {  // loop de bloqueio
-      lcd.print(F(i));
+      lcd.print(i);
       delay(1000);
     }
     tries = 0;
