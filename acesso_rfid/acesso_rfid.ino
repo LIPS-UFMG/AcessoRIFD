@@ -57,7 +57,7 @@ void setup() {
   lcd.print(F(" Controle RFID"));
   lcd.setCursor(0, 1);           //seta cursor para segunda linha, primeira coluna
   lcd.print(F("   de Acesso"));  //imprime mensagem inicial
-  delay(2000);
+  delay(500);
   lcd.clear();
 }
 
@@ -206,7 +206,7 @@ void loop() {
     lcd.setCursor(14, 1);
 
     for (int i = bloq; i >= 0; i--) {  // loop de bloqueio
-      lcd.print(F("i"));
+      lcd.print(F(i));
       delay(1000);
     }
     tries = 0;
