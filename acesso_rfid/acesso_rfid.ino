@@ -38,8 +38,8 @@ int cards[][5] = {
 
   { 158, 229, 235, 159, 15 },  //9 Lucas
   { 211, 9, 30, 25, 221 },     //10 Gabriela
-  { 137, 77, 78, 89, 211 },     //11 Leonardo
-  { 131, 213, 11, 25, 68 },     //12 Jessica
+  { 137, 77, 78, 89, 211 },    //11 Leonardo
+  { 131, 213, 11, 25, 68 },    //12 Jessica
   { 121, 39, 138, 90, 142 }    //13 Joao
 
 };
@@ -57,9 +57,11 @@ void setup() {
   lcd.print(F(" Controle RFID"));
   lcd.setCursor(0, 1);           //seta cursor para segunda linha, primeira coluna
   lcd.print(F("   de Acesso"));  //imprime mensagem inicial
-  delay(2000);
+  delay(500);
   lcd.clear();
 }
+
+
 
 void loop() {
 
@@ -81,11 +83,10 @@ void loop() {
       Serial.print(rfid.serNum[3]);
       Serial.print(" ");
       Serial.print(rfid.serNum[4]);
-      Serial.println("");  // le serial number
-
+      Serial.println("");                                // le serial number
       for (int i = 0; i < sizeof(cards); i++) {          //Loop para procurar no banco se cartão tem acesso
         for (int j = 0; j < sizeof(rfid.serNum); j++) {  //Confere grupo de caracteres a cada vez
-          if (rfid.serNum[i] != cards[i][j]) {
+          if (rfid.serNum[j] != cards[i][j]) {
             access = false;
             break;
           } else {
@@ -100,6 +101,7 @@ void loop() {
         delay(70);
         digitalWrite(solenoide, HIGH);
 
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(F("  Bem-Vindo(a) "));
         for (int i = 0; i < sizeof(rfid.serNum); i++) {  //loop para imprimir nome
@@ -113,7 +115,7 @@ void loop() {
             break;
           } else if (rfid.serNum[i] == cards[2][i]) {
             lcd.setCursor(0, 1);
-            lcd.print("   Sebastião   ");
+            lcd.print("   Sebastiao   ");
             break;
           } else if (rfid.serNum[i] == cards[3][i]) {
             lcd.setCursor(0, 1);
@@ -157,11 +159,11 @@ void loop() {
             break;
           } else if (rfid.serNum[i] == cards[13][i]) {
             lcd.setCursor(0, 1);
-            lcd.print("    João   ");
+            lcd.print("    Joao   ");
             break;
           } else {
             lcd.setCursor(0, 1);
-            lcd.print("    Mistério   ");
+            lcd.print("    Misterio   ");
             break;
           }
         }
@@ -205,7 +207,7 @@ void loop() {
     lcd.setCursor(14, 1);
 
     for (int i = bloq; i >= 0; i--) {  // loop de bloqueio
-      lcd.print(F("i"));
+      lcd.print(i);
       delay(1000);
     }
     tries = 0;
