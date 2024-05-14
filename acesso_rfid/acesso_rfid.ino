@@ -36,12 +36,13 @@ int cards[][5] = {
   { 236, 20, 101, 205, 80 },   //6 Bruno
   { 166, 37, 108, 33, 206 },   //7 Giulia
   { 92, 187, 124, 204, 87 },   //8 Samuel
+  { 246, 196, 16, 26, 56 },    //9 Joao Pedro
 
-  { 158, 229, 235, 159, 15 },  //9 Lucas
-  { 211, 9, 30, 25, 221 },     //10 Gabriela
-  { 136, 2, 58, 42, 154 },     //11 Leonardo
-  { 131, 213, 11, 25, 68 },    //12 Jessica
-  { 121, 39, 138, 90, 142 }    //13 Joao
+  { 158, 229, 235, 159, 15 },  //10 Lucas
+  { 211, 9, 30, 25, 221 },     //11 Gabriela
+  { 136, 2, 58, 42, 154 },     //12 Leonardo
+  { 131, 213, 11, 25, 68 },    //13 Jessica
+  { 121, 39, 138, 90, 142 }    //14 Joao
 
 };
 
@@ -164,21 +165,25 @@ void loop() {
             break;
           } else if ((rfid.serNum[i] == cards[10][i]) && (rfid.serNum[i + 1] == cards[10][i + 1])) {
             lcd.setCursor(0, 1);
-            lcd.print("      Lucas    ");
+            lcd.print("     Joao     ");
             break;
           } else if ((rfid.serNum[i] == cards[11][i]) && (rfid.serNum[i + 1] == cards[11][i + 1])) {
             lcd.setCursor(0, 1);
-            lcd.print("    Gabriela   ");
+            lcd.print("      Lucas    ");
             break;
           } else if ((rfid.serNum[i] == cards[12][i]) && (rfid.serNum[i + 1] == cards[12][i + 1])) {
             lcd.setCursor(0, 1);
-            lcd.print("    Leonardo   ");
+            lcd.print("    Gabriela   ");
             break;
           } else if ((rfid.serNum[i] == cards[13][i]) && (rfid.serNum[i + 1] == cards[13][i + 1])) {
             lcd.setCursor(0, 1);
-            lcd.print("    Jessica   ");
+            lcd.print("    Leonardo   ");
             break;
           } else if ((rfid.serNum[i] == cards[14][i]) && (rfid.serNum[i + 1] == cards[14][i + 1])) {
+            lcd.setCursor(0, 1);
+            lcd.print("    Jessica   ");
+            break;
+          } else if ((rfid.serNum[i] == cards[15][i]) && (rfid.serNum[i + 1] == cards[15][i + 1])) {
             lcd.setCursor(0, 1);
             lcd.print("    Joao   ");
             break;
