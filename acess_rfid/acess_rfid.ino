@@ -91,7 +91,7 @@ void loop() {
 
   else if (rfid.isCard()) {  //loop principal, lê se for cartão
 
-    if (rfid.readCardSerial()) {  // salva valor lido
+    if (rfid.readCardSerial()) {  // Se for um valor serial válido
       Serial.print(rfid.serNum[0]);
       Serial.print(" ");
       Serial.print(rfid.serNum[1]);
